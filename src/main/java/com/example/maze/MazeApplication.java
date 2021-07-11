@@ -23,7 +23,9 @@ public class MazeApplication implements CommandLineRunner {
     public void run(String... args) throws Exception {
         forget();
         register();
+        // LoopMazes {
         enterMaze();
+        // Mazerunner(enterMaze)
     }
 
     public void forget() throws Exception {
