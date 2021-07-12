@@ -18,10 +18,18 @@ public class Maze {
     public void traverse() {
         checkForGold();
         if (direction.isExit()) {
-            direction.exit();
+            try {
+                direction.exit();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         } else {
-            this.direction = direction.travelToNextDestination();
-            this.traverse();
+            try {
+                this.direction = direction.travelToNextDestination();
+                this.traverse();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
     }
 

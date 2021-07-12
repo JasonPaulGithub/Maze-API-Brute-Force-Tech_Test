@@ -3,20 +3,21 @@ package com.example.maze;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.util.*;
 
 // {
 // "possibleMoveActions":[{
-    // "direction":"Right",
-    // "isStart":false,
-    // "allowsExit":false,
-    // "allowsScoreCollection":false,
-    // "hasBeenVisited":false,
-    // "rewardOnDestination":10,
-    // "tagOnTile":null
+// "direction":"Right",
+// "isStart":false,
+// "allowsExit":false,
+// "allowsScoreCollection":false,
+// "hasBeenVisited":false,
+// "rewardOnDestination":10,
+// "tagOnTile":null
 // }],
 // "canCollectScoreHere":false,
 // "canExitMazeHere":false,
@@ -28,7 +29,7 @@ import java.util.Map;
 public class Direction {
 
     private final String mazeData;
-    private Map<String,Boolean> directions = new HashMap<>();
+    private Map<String, Boolean> directions = new HashMap<>();
 
     public Direction(String mazeData) {
         this.mazeData = mazeData;
@@ -49,7 +50,6 @@ public class Direction {
 
     // Parse all possible moves with visited data from the Possible Moves Array
     private void parsePossibleMovesList(List<JSONObject> possibleMovesList) {
-        parsePossibleMovesList(possibleMovesList);
         for (JSONObject jsonObject : possibleMovesList) {
             directions.put(
                     jsonObject.getString("direction"),
@@ -59,8 +59,28 @@ public class Direction {
         }
     }
 
-    public boolean exit() {
-        return false;
+    public void exit() throws Exception {
+        String baseUrl = "https://maze.hightechict.nl/api/maze/exit";
+        URL url = new URL(baseUrl);
+        HttpURLConnection con = (HttpURLConnection) url.openConnection();
+        con.setRequestMethod("POST");
+        con.setRequestProperty("accept", "application/json");
+        con.setChunkedStreamingMode(100);
+        con.setDoOutput(true);
+        con.setRequestProperty(MazeApplication.auth, MazeApplication.code);
+        int status = con.getResponseCode();
+        System.out.println("exit status " + status);
+
+        // We now read the data as string
+        BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));
+        String inputLine;
+        StringBuilder mazeData = new StringBuilder();
+        while ((inputLine = in.readLine()) != null) {
+            mazeData.append(inputLine);
+        }
+        // ToDo: use finally/withResources here
+        in.close();
+        con.disconnect();
     }
 
     public boolean isExit() {
@@ -77,21 +97,51 @@ public class Direction {
     }
 
     // Gets a new Direction based on UVP/random
-    public Direction travelToNextDestination() {
+    public Direction travelToNextDestination() throws Exception {
         return new Direction(takeDirection());
     }
 
     // Choose direction via Non-Visited Priority, or at random
     private String chooseDirection() {
-        // for each direction in directions
-        // if hasBeenVisited = false then we go there else choose at random
-        return null;
+        String chosenDirection = null;
+        // Go to non-visited
+        for (Map.Entry<String, Boolean> entry : directions.entrySet()) {
+            if (!entry.getValue()) {
+                chosenDirection = entry.getKey();
+            }
+        }
+        // Or choose at random
+        if (chosenDirection == null) {
+            String[] keysAsArray = directions.keySet().toArray(new String[0]);
+            Random r = new Random();
+            return keysAsArray[r.nextInt(keysAsArray.length)];
+        }
+        return chosenDirection;
     }
 
     //Make the Api call and put the data into the new Direction object
-    private String takeDirection() {
-        chooseDirection();
-        //make Api call with chooseDirection as affix and return the raw Json as string (mapData)
-        return null;
+    private String takeDirection() throws Exception{
+        String baseUrl = "https://maze.hightechict.nl/api/maze/move?direction="+chooseDirection();
+        URL url = new URL(baseUrl);
+        HttpURLConnection con = (HttpURLConnection) url.openConnection();
+        con.setRequestMethod("POST");
+        con.setRequestProperty("accept", "application/json");
+        con.setChunkedStreamingMode(100);
+        con.setDoOutput(true);
+        con.setRequestProperty(MazeApplication.auth, MazeApplication.code);
+        //int status = con.getResponseCode();
+        //System.out.println(status);
+
+        // We now read the data as string
+        BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));
+        String inputLine;
+        StringBuilder mazeData = new StringBuilder();
+        while ((inputLine = in.readLine()) != null) {
+            mazeData.append(inputLine);
+        }
+        // ToDo: use finally/withResources here
+        in.close();
+        con.disconnect();
+        return mazeData.toString();
     }
 }
