@@ -12,6 +12,8 @@ import java.net.URL;
 @SpringBootApplication
 public class MazeApplication implements CommandLineRunner {
 
+    // Todo: Consider Lombok
+
     // Todo: refactor this static final data into an ApiCall Object
     public static final String auth = "Authorization";
     public static final String code = "HTI Thanks You [415b]";

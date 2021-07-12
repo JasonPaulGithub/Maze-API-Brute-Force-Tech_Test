@@ -48,15 +48,14 @@ public class Maze {
         // We now read the data as string
         BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));
         String inputLine;
-        StringBuilder content = new StringBuilder();
+        StringBuilder mazeData = new StringBuilder();
         while ((inputLine = in.readLine()) != null) {
-            content.append(inputLine);
+            mazeData.append(inputLine);
         }
+        // ToDo: use finally/withResources here
         in.close();
         con.disconnect();
-        System.out.println(content);
-
-        return new Direction(mazeName);
+        return new Direction(mazeData.toString());
     }
 
 }
