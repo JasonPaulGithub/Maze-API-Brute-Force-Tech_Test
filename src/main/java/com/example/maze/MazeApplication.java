@@ -29,7 +29,7 @@ public class MazeApplication implements CommandLineRunner {
             // mazeRunner.run()
     }
 
-    // TODO: First we lay out the plan for each method, make tests, then refactor.
+    // TODO: Approach: First lay out each method, make tests, then refactor out things like repeat code (etc) later.
 
     public void forget() throws Exception {
         String baseUrl = "https://maze.hightechict.nl/api/player/forget";
