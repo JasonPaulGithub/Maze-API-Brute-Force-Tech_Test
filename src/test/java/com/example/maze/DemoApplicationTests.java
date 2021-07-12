@@ -27,4 +27,9 @@ public class DemoApplicationTests {
         api.call();
         assert (api.getStatus() == 200);
     }
+
+    @Test
+    public void checkForGoldApiObject() {
+        // ToDo: We can test positive and negative results with "collectScore() vs Api" with custom strings
+    }
 }

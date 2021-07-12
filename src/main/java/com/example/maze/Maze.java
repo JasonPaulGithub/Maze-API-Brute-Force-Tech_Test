@@ -36,38 +36,18 @@ public class Maze {
 
     private void checkForGold() {
         if (direction.hasGold()) {
+            System.out.println("Gold spotted! Trying to collect...");
             try {
                 direction.takeGold();
             } catch (Exception e) {
-                //e.printStackTrace();
+                e.printStackTrace();
             }
         }
     }
 
     private Direction enterMaze(String mazeName) throws IOException {
-        // TODO: URL url = new URL(baseUrl + affix + mazeName);
-        String baseUrl = "https://maze.hightechict.nl/api/mazes/enter?mazeName=" + mazeName;
-        URL url = new URL(baseUrl);
-        HttpURLConnection con = (HttpURLConnection) url.openConnection();
-        con.setRequestMethod("POST");
-        con.setRequestProperty("accept", "application/json");
-        con.setChunkedStreamingMode(100);
-        con.setDoOutput(true);
-        con.setRequestProperty(MazeApplication.auth, MazeApplication.code);
-        //int status = con.getResponseCode();
-        //System.out.println(status);
-
-        // We now read the data as string
-        BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));
-        String inputLine;
-        StringBuilder mazeData = new StringBuilder();
-        while ((inputLine = in.readLine()) != null) {
-            mazeData.append(inputLine);
-        }
-        // ToDo: use finally/withResources here
-        in.close();
-        con.disconnect();
-        return new Direction(mazeData.toString());
+        Api api = new Api("/api/mazes/", "enter?mazeName=" + mazeName, "post");
+        return new Direction(api.call());
     }
 
 }

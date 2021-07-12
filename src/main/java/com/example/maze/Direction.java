@@ -3,28 +3,7 @@ package com.example.maze;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.URL;
 import java.util.*;
-
-// {
-// "possibleMoveActions":[{
-// "direction":"Right",
-// "isStart":false,
-// "allowsExit":false,
-// "allowsScoreCollection":false,
-// "hasBeenVisited":false,
-// "rewardOnDestination":10,
-// "tagOnTile":null
-// }],
-// "canCollectScoreHere":false,
-// "canExitMazeHere":false,
-// "currentScoreInHand":0,
-// "currentScoreInBag":0,
-// "tagOnCurrentTile":null
-// }
 
 public class Direction {
 
@@ -60,27 +39,8 @@ public class Direction {
     }
 
     public void exit() throws Exception {
-        String baseUrl = "https://maze.hightechict.nl/api/maze/exit";
-        URL url = new URL(baseUrl);
-        HttpURLConnection con = (HttpURLConnection) url.openConnection();
-        con.setRequestMethod("POST");
-        con.setRequestProperty("accept", "application/json");
-        con.setChunkedStreamingMode(100);
-        con.setDoOutput(true);
-        con.setRequestProperty(MazeApplication.auth, MazeApplication.code);
-        int status = con.getResponseCode();
-        System.out.println("exit status " + status);
-
-        // We now read the data as string
-        BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));
-        String inputLine;
-        StringBuilder mazeData = new StringBuilder();
-        while ((inputLine = in.readLine()) != null) {
-            mazeData.append(inputLine);
-        }
-        // ToDo: use finally/withResources here
-        in.close();
-        con.disconnect();
+        Api api = new Api("/api/maze/", "exit", "post");
+        api.call();
     }
 
     public boolean isExit() {
@@ -88,27 +48,8 @@ public class Direction {
     }
 
     public void takeGold() throws Exception {
-        String baseUrl = "https://maze.hightechict.nl/api/maze/collectScore";
-        URL url = new URL(baseUrl);
-        HttpURLConnection con = (HttpURLConnection) url.openConnection();
-        con.setRequestMethod("POST");
-        con.setRequestProperty("accept", "application/json");
-        con.setChunkedStreamingMode(100);
-        con.setDoOutput(true);
-        con.setRequestProperty(MazeApplication.auth, MazeApplication.code);
-        //int status = con.getResponseCode();
-        //System.out.println(status);
-
-        // We now read the data as string
-        BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));
-        String inputLine;
-        StringBuilder mazeData = new StringBuilder();
-        while ((inputLine = in.readLine()) != null) {
-            mazeData.append(inputLine);
-        }
-        // ToDo: use finally/withResources here
-        in.close();
-        con.disconnect();
+        Api api = new Api("/api/maze/", "collectScore", "post");
+        System.out.println(api.call());
     }
 
     public boolean hasGold() {
@@ -120,7 +61,7 @@ public class Direction {
         return new Direction(takeDirection());
     }
 
-    // Choose direction via Non-Visited Priority, or at random
+    // Choose direction via Non-Visited Priority, or at random // Suggested: choose for score
     private String chooseDirection() {
         String chosenDirection = null;
         // Go to non-visited
@@ -139,28 +80,8 @@ public class Direction {
     }
 
     //Make the Api call and put the data into the new Direction object
-    private String takeDirection() throws Exception{
-        String baseUrl = "https://maze.hightechict.nl/api/maze/move?direction="+chooseDirection();
-        URL url = new URL(baseUrl);
-        HttpURLConnection con = (HttpURLConnection) url.openConnection();
-        con.setRequestMethod("POST");
-        con.setRequestProperty("accept", "application/json");
-        con.setChunkedStreamingMode(100);
-        con.setDoOutput(true);
-        con.setRequestProperty(MazeApplication.auth, MazeApplication.code);
-        //int status = con.getResponseCode();
-        //System.out.println(status);
-
-        // We now read the data as string
-        BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));
-        String inputLine;
-        StringBuilder mazeData = new StringBuilder();
-        while ((inputLine = in.readLine()) != null) {
-            mazeData.append(inputLine);
-        }
-        // ToDo: use finally/withResources here
-        in.close();
-        con.disconnect();
-        return mazeData.toString();
+    private String takeDirection() throws Exception {
+        Api api = new Api("/api/maze/", "move?direction=" + chooseDirection(), "post");
+        return api.call();
     }
 }
