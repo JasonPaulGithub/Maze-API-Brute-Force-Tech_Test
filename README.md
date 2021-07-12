@@ -17,3 +17,4 @@ Improvements to make:
 * A better maze running algorithm.
 * A way to track mazes so nuances within each can be accounted for (i.e., putting the exit on the first tile!)
 * Unit tests. Of course!
+* Use of Lombok.(because I've been wanting to try it!)
