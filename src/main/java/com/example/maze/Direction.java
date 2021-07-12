@@ -29,8 +29,6 @@ public class Direction {
 
     private final String mazeData;
     private Map<String,Boolean> directions = new HashMap<>();
-    //ToDo : private boolean allowsExit = false;
-    private boolean isExit = false;
 
     public Direction(String mazeData) {
         this.mazeData = mazeData;
@@ -56,6 +54,7 @@ public class Direction {
             directions.put(
                     jsonObject.getString("direction"),
                     jsonObject.getBoolean("hasBeenVisited")
+                    //ToDo : handle "allowsExit" for efficiency;
             );
         }
     }
@@ -77,8 +76,19 @@ public class Direction {
     }
 
     // Gets a new Direction based on UVP/random
-    public Direction getNextDirection() {
-        //TODO: API call with chosen direction
-        return new Direction(null);
+    public Direction travelToNextDirection() {
+        return new Direction(takeDirection());
+    }
+
+    // Choose direction via Non-Visited Priority, or at random
+    private String chooseDirection() {
+        return null;
+    }
+
+    //Make the Api call and put the data into the new Direction object
+    private String takeDirection() {
+        chooseDirection();
+        //make Api call with chooseDirection as affix
+        return null;
     }
 }
