@@ -33,8 +33,7 @@ public class Maze {
 
     private Direction enterMaze(String mazeName) throws IOException {
         // TODO: URL url = new URL(baseUrl + affix + mazeName);
-        String baseUrl = "https://maze.hightechict.nl/api/mazes/enter?mazeName="
-                + mazeName;
+        String baseUrl = "https://maze.hightechict.nl/api/mazes/enter?mazeName=" + mazeName;
         URL url = new URL(baseUrl);
         HttpURLConnection con = (HttpURLConnection) url.openConnection();
         con.setRequestMethod("POST");

@@ -27,15 +27,19 @@ import java.util.Map;
 
 public class Direction {
 
-    Map<String,Boolean> directions = new HashMap<>();
+    private final String mazeData;
+    private Map<String,Boolean> directions = new HashMap<>();
+    //ToDo : private boolean allowsExit = false;
+    private boolean isExit = false;
 
     public Direction(String mazeData) {
-        parsePossibleMoveActionsArray(new JSONObject(mazeData));
+        this.mazeData = mazeData;
+        parsePossibleMoveActionsArray();
     }
 
     // Parse the Possible Moves array
-    private void parsePossibleMoveActionsArray(JSONObject jsonObject) {
-        JSONArray possibleMoveActionsArray = jsonObject.getJSONArray("possibleMoveActions");
+    private void parsePossibleMoveActionsArray() {
+        JSONArray possibleMoveActionsArray = new JSONObject(mazeData).getJSONArray("possibleMoveActions");
         List<JSONObject> possibleMovesList = new ArrayList<>();
 
         for (int i = 0; i < possibleMoveActionsArray.length(); i++) {
@@ -45,7 +49,7 @@ public class Direction {
         parsePossibleMovesList(possibleMovesList);
     }
 
-    // Parse all possible moves and visited data from the Possible Moves Array
+    // Parse all possible moves with visited data from the Possible Moves Array
     private void parsePossibleMovesList(List<JSONObject> possibleMovesList) {
         parsePossibleMovesList(possibleMovesList);
         for (JSONObject jsonObject : possibleMovesList) {
@@ -57,13 +61,11 @@ public class Direction {
     }
 
     public boolean exit() {
-        //TODO
         return false;
     }
 
     public boolean isExit() {
-        //TODO
-        return false;
+        return new JSONObject(mazeData).getBoolean("canExitMazeHere");
     }
 
     public void takeGold() {
@@ -71,13 +73,12 @@ public class Direction {
     }
 
     public boolean hasGold() {
-        //TODO
-        return false;
+        return new JSONObject(mazeData).getBoolean("canCollectScoreHere");
     }
 
     // Gets a new Direction based on UVP/random
     public Direction getNextDirection() {
-        //TODO
+        //TODO: API call with chosen direction
         return new Direction(null);
     }
 }
