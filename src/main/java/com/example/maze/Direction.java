@@ -87,9 +87,28 @@ public class Direction {
         return new JSONObject(mazeData).getBoolean("canExitMazeHere");
     }
 
-    public void takeGold() {
-        //ToDo
-        System.out.println("Tile has gold!");
+    public void takeGold() throws Exception {
+        String baseUrl = "https://maze.hightechict.nl/api/maze/collectScore";
+        URL url = new URL(baseUrl);
+        HttpURLConnection con = (HttpURLConnection) url.openConnection();
+        con.setRequestMethod("POST");
+        con.setRequestProperty("accept", "application/json");
+        con.setChunkedStreamingMode(100);
+        con.setDoOutput(true);
+        con.setRequestProperty(MazeApplication.auth, MazeApplication.code);
+        //int status = con.getResponseCode();
+        //System.out.println(status);
+
+        // We now read the data as string
+        BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));
+        String inputLine;
+        StringBuilder mazeData = new StringBuilder();
+        while ((inputLine = in.readLine()) != null) {
+            mazeData.append(inputLine);
+        }
+        // ToDo: use finally/withResources here
+        in.close();
+        con.disconnect();
     }
 
     public boolean hasGold() {

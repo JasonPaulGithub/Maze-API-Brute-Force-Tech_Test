@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
+import java.net.ProtocolException;
 import java.net.URL;
 
 public class Maze {
@@ -35,7 +36,11 @@ public class Maze {
 
     private void checkForGold() {
         if (direction.hasGold()) {
-            direction.takeGold();
+            try {
+                direction.takeGold();
+            } catch (Exception e) {
+                //e.printStackTrace();
+            }
         }
     }
 
