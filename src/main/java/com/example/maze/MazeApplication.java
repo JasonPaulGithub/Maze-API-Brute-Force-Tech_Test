@@ -23,10 +23,13 @@ public class MazeApplication implements CommandLineRunner {
     public void run(String... args) throws Exception {
         forget();
         register();
-        // LoopMazes {
-        enterMaze();
-        // Mazerunner(enterMaze)
+        // for Each Maze {
+            // Maze maze = new Maze("maze name");
+            // MazeRunner mazeRunner = new MazeRunner(maze)
+            // mazeRunner.run()
     }
+
+    // TODO: First we lay out the plan for each method, make tests, then refactor.
 
     public void forget() throws Exception {
         String baseUrl = "https://maze.hightechict.nl/api/player/forget";
