@@ -30,29 +30,30 @@ public class Direction {
     Map<String,Boolean> directions = new HashMap<>();
 
     public Direction(String mazeData) {
-        JSONObject mazeObj = new JSONObject(mazeData);
-        parsePossibleMoveActionsArray();
-        JSONArray possibleMoveActionsArray = mazeObj.getJSONArray("possibleMoveActions");
-        parsePossibleMovesList();
+        parsePossibleMoveActionsArray(new JSONObject(mazeData));
+    }
+
+    // Parse the Possible Moves array
+    private void parsePossibleMoveActionsArray(JSONObject jsonObject) {
+        JSONArray possibleMoveActionsArray = jsonObject.getJSONArray("possibleMoveActions");
         List<JSONObject> possibleMovesList = new ArrayList<>();
 
         for (int i = 0; i < possibleMoveActionsArray.length(); i++) {
             possibleMovesList.add((JSONObject) possibleMoveActionsArray.get(i));
         }
 
+        parsePossibleMovesList(possibleMovesList);
+    }
+
+    // Parse all possible moves and visited data from the Possible Moves Array
+    private void parsePossibleMovesList(List<JSONObject> possibleMovesList) {
+        parsePossibleMovesList(possibleMovesList);
         for (JSONObject jsonObject : possibleMovesList) {
             directions.put(
                     jsonObject.getString("direction"),
                     jsonObject.getBoolean("hasBeenVisited")
             );
         }
-
-    }
-
-    private void parsePossibleMoveActionsArray() {
-    }
-
-    private void parsePossibleMovesList() {
     }
 
     public boolean exit() {
