@@ -20,7 +20,7 @@ public class Maze {
         if (direction.isExit()) {
             direction.exit();
         } else {
-            this.direction = direction.travelToNextDirection();
+            this.direction = direction.travelToNextDestination();
             this.traverse();
         }
     }

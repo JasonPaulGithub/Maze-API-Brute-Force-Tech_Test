@@ -13,7 +13,6 @@ import java.net.URL;
 public class MazeApplication implements CommandLineRunner {
 
     // Todo: Consider Lombok
-
     // Todo: refactor this static final data into an ApiCall Object
     public static final String auth = "Authorization";
     public static final String code = "HTI Thanks You [415b]";
@@ -31,6 +30,7 @@ public class MazeApplication implements CommandLineRunner {
         maze.traverse();
     }
 
+    // API call to reset the player account and allow them to start over.
     public void forget() throws Exception {
         String baseUrl = "https://maze.hightechict.nl/api/player/forget";
         // Connect to get the data from URL
@@ -54,6 +54,7 @@ public class MazeApplication implements CommandLineRunner {
         System.out.println(content);
     }
 
+    // API call to start the player off in the game.
     public void register() throws Exception {
         String baseUrl = "https://maze.hightechict.nl/api/player/register?name=Jason";
         URL url = new URL(baseUrl);

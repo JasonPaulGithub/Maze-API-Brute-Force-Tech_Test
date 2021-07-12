@@ -32,11 +32,11 @@ public class Direction {
 
     public Direction(String mazeData) {
         this.mazeData = mazeData;
-        parsePossibleMoveActionsArray();
+        parseMazeDataForNextDestination();
     }
 
     // Parse the Possible Moves array
-    private void parsePossibleMoveActionsArray() {
+    private void parseMazeDataForNextDestination() {
         JSONArray possibleMoveActionsArray = new JSONObject(mazeData).getJSONArray("possibleMoveActions");
         List<JSONObject> possibleMovesList = new ArrayList<>();
 
@@ -68,7 +68,8 @@ public class Direction {
     }
 
     public void takeGold() {
-
+        //ToDo
+        System.out.println("Tile has gold!");
     }
 
     public boolean hasGold() {
@@ -76,19 +77,21 @@ public class Direction {
     }
 
     // Gets a new Direction based on UVP/random
-    public Direction travelToNextDirection() {
+    public Direction travelToNextDestination() {
         return new Direction(takeDirection());
     }
 
     // Choose direction via Non-Visited Priority, or at random
     private String chooseDirection() {
+        // for each direction in directions
+        // if hasBeenVisited = false then we go there else choose at random
         return null;
     }
 
     //Make the Api call and put the data into the new Direction object
     private String takeDirection() {
         chooseDirection();
-        //make Api call with chooseDirection as affix
+        //make Api call with chooseDirection as affix and return the raw Json as string (mapData)
         return null;
     }
 }
