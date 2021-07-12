@@ -17,7 +17,7 @@ public class Maze {
 
     public void traverse() {
         checkForGold();
-        if(direction.isExit()){
+        if (direction.isExit()) {
             direction.exit();
         } else {
             this.direction = direction.getNextDirection();
@@ -25,14 +25,16 @@ public class Maze {
         }
     }
 
-    private void checkForGold(){
-        if(direction.hasGold()){
+    private void checkForGold() {
+        if (direction.hasGold()) {
             direction.takeGold();
-        };
+        }
     }
 
     private Direction enterMaze(String mazeName) throws IOException {
-        String baseUrl = "https://maze.hightechict.nl/api/mazes/enter?mazeName=Hello%20maze";
+        // TODO: URL url = new URL(baseUrl + affix + mazeName);
+        String baseUrl = "https://maze.hightechict.nl/api/mazes/enter?mazeName="
+                + mazeName;
         URL url = new URL(baseUrl);
         HttpURLConnection con = (HttpURLConnection) url.openConnection();
         con.setRequestMethod("POST");
