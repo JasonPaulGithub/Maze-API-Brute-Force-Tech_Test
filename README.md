@@ -18,6 +18,6 @@ Improvements to make:
 * More unit tests. Of course!
 * Use of Lombok.(because I've been wanting to try it!)
 
-Thanks to High Tech ICT for the chance to work on this. 
+Thanks to High Tech ICT for access.
 Click the link to pay them a visit!
 https://www.hightechict.nl/
