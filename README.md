@@ -1,4 +1,4 @@
-# MAZEBRUTE
+# MAZE-BRUTE
 
 This is my solution to a maze game that works with API requests.
 You send commands to your player via Rest Api calls.
@@ -9,7 +9,7 @@ This was coded from scratch in two days.
 
 Here are my notes for the project so far. Let's call this version - V0.1(Mvp)
 -
-MazeBrute:
+Maze-Brute:
 MVP complete: All mazes traversed with a score included.
 
 Improvements to make:
