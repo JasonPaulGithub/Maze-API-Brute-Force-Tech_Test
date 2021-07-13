@@ -7,7 +7,7 @@ More information can be found here: https://maze.hightechict.nl/dox/amazing-open
 
 This was coded from scratch in two days.
 
-Here are my notes for the project so far. Let's call this version - V0.1(Mvp)
+Here are my notes for version - V0.1(Mvp)
 -
 Maze-Brute:
 MVP complete: All mazes traversed with a score included.
