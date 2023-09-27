@@ -19,7 +19,3 @@ Improvements to make:
 * Use of Lombok.(because I've been wanting to try it!)
 * Extract the different Exception responses in the ApiObject to get more detailed logs so to find other things in the game (for example; the easter egg)
 * (Maybe overkill but) - to extract out the hard coded connection data into an applications.properties file
-
-Thanks to High Tech ICT for access.
-Click the link to pay them a visit!
-https://www.hightechict.nl/
