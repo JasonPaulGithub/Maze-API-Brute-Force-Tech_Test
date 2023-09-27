@@ -4,6 +4,7 @@ This is my solution to a maze game that works with API requests.
 You send commands to your player via Rest Api calls.
 You can; enter maze, pick up coins, head to the exit, leave the maze (etc).
 More information can be found here: https://maze.hightechict.nl/dox/amazing-openapi.html#/
+Update- You can still see the project, but the Link is dead, sorry :( 
 
 This was coded from scratch in two days.
 
